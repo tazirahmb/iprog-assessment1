@@ -1,14 +1,23 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./Home.module.css";
+
+// component
+import Header from '@/components/Header';
+import SearchBox from '@/components/SearchBox';
+import ProductItem from '@/components/ProductItem';
 
 export default function Home() {
   return (
+    <>
+    <Header/>
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
-        </p>
+          </p>
+          <SearchBox />
+          {[1, 20, 300, 444, 552].map((idx) => (<ProductItem num={idx} key={idx} />))}
         <div>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
@@ -90,6 +99,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

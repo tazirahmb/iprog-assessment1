@@ -1,105 +1,22 @@
-import Image from "next/image";
-import styles from "./Home.module.css";
-
 // component
 import Header from '@/components/Header';
 import SearchBox from '@/components/SearchBox';
 import ProductItem from '@/components/ProductItem';
 
+const dummyData = [
+  {_id: 1, name: 'product 1', image: 'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg', unit: '500 gram', price: 1.22, stock: 34},
+  {_id: 2, name: 'product 2', image: 'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg', unit: "Pack of 10", price: 100, stock: 10},
+  {_id: 3, name: 'product 3', unit: 'Kilo', price: 5.4, stock: 0},
+  {_id: 4, name: 'product 4', image: 'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg', unit: 'Cup', price: 30, stock: 3},
+  {_id: 5, name: 'product 5', image: 'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg', unit: 'Litre', price: 2.03, stock: 34},
+]
+
 export default function Home() {
   return (
     <>
     <Header/>
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-          </p>
           <SearchBox />
-          {[1, 20, 300, 444, 552].map((idx) => (<ProductItem num={idx} key={idx} />))}
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-      </main>
-    </>
+      {dummyData.map(({_id, ...item}) => (<ProductItem item={item} key={_id} />))}
+      </>
   );
 }

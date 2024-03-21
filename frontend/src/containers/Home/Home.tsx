@@ -1,7 +1,9 @@
 // component
 import Header from '@/components/Header';
-import SearchBox from '@/components/SearchBox';
 import ProductItem from '@/components/ProductItem';
+import Categories from '@/components/Categories';
+
+const dummyCategories = ["Frozen", "Fresh", "Beverages", "Home", "Pet-food"];
 
 const dummyData = [
   {_id: 1, name: 'product 1', image: 'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg', unit: '500 gram', price: 1.22, stock: 34},
@@ -14,9 +16,17 @@ const dummyData = [
 export default function Home() {
   return (
     <>
-    <Header/>
-          <SearchBox />
+      <Header />
+      <main className="container">
+        <div className="flex-row">
+          <aside className="col-3">
+            <Categories categories={dummyCategories}/>
+          </aside>
+      <section className="flex-row justify-content-start  my-5 col-9 g-3">
       {dummyData.map(({_id, ...item}) => (<ProductItem item={item} key={_id} />))}
+      </section>
+      </div>
+      </main>
       </>
   );
 }

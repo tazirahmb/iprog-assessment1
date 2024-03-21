@@ -2,7 +2,11 @@ const dummyImg = 'https://jmjglobalwinpex.com/wp-content/uploads/2019/01/1141230
           
 import Image from "next/image";
 
-const ProductItem = ({ item }: ProductItemProps) => (<div>
+const ProductItem = ({ item }: ProductItemProps) => {
+  
+  const isSoldOut = item.stock === 0;
+
+  return (<div className="col-3">
     <Image
               src={item.image || dummyImg}
               alt={item.name}
@@ -12,8 +16,8 @@ const ProductItem = ({ item }: ProductItemProps) => (<div>
             />
   <p><strong>{item.name}</strong></p>
   <p>AU${item.price} per {item.unit}</p>
-  <button disabled={item.stock === 0}>Add to Cart</button>
-</div>)
+  <button disabled={isSoldOut}>{isSoldOut ? 'Sold Out' : 'Add to Cart'}</button>
+</div>)}
 
 export default ProductItem;
 

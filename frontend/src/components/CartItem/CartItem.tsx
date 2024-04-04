@@ -3,9 +3,11 @@ const dummyImg =
 
 import Image from 'next/image';
 
-const ProductItem = ({ item, onClick }: ProductItemProps) => {
-	const isSoldOut = item.stock === 0;
-
+const CartItem = ({
+	item,
+	handleAddQuantity,
+	handleReduceQuantity,
+}: CartItemProps) => {
 	return (
 		<div className="col-3">
 			<Image
@@ -21,23 +23,33 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 			<p>
 				A${item.price} per {item.unit}
 			</p>
-			<button disabled={isSoldOut} onClick={(e) => onClick(e, item)}>
-				{isSoldOut ? 'Sold Out' : 'Add to Cart'}
+			<p>qty: {item.quantity}</p>
+			<button
+				onClick={() => handleAddQuantity(item._id)}
+				disabled={item.quantity >= item.stock}
+			>
+				+
 			</button>
+			<button onClick={() => handleReduceQuantity(item._id)}>-</button>
+			<div>
+				<strong>total Price: A${item.quantity * item.price}</strong>
+			</div>
 		</div>
 	);
 };
 
-export default ProductItem;
+export default CartItem;
 
-interface ProductItemProps {
-	readonly item: {
+interface CartItemProps {
+	item: {
 		_id: number | string;
 		name: string;
 		image?: string;
 		unit: string;
 		price: number;
 		stock: number;
+		quantity: number;
 	};
-	onClick: any; // TODO: ganti jadi buat function?
+	handleAddQuantity: any;
+	handleReduceQuantity: any;
 }

@@ -22,7 +22,7 @@ export default function ShoppingCart() {
 		setShoppingCartItems(storageCartItems);
 	}, []);
 
-	function handleUpdateCartData(cartItems) {
+	function handleUpdateCartData(cartItems = []) {
 		setShoppingCartItems(cartItems);
 
 		window.localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -67,6 +67,16 @@ export default function ShoppingCart() {
 		0,
 	);
 
+	function resetCart() {
+		let confirmEmptyCart = window.confirm(
+			'are you sure you want to remove all item(s) in the cart?',
+		);
+
+		if (confirmEmptyCart) {
+			handleUpdateCartData();
+		}
+	}
+
 	return (
 		<>
 			<Header />
@@ -79,6 +89,7 @@ export default function ShoppingCart() {
 							<>
 								<h1>Shopping Cart</h1>
 								<div className="flex-column g-2 my-3">
+									<button onClick={resetCart}>Clear Cart</button>
 									{shoppingCartItems.map((item) => (
 										<CartItem
 											item={item}

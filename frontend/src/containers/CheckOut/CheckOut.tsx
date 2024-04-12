@@ -7,28 +7,20 @@ import InputBox from '@/components/InputBox/InputBox';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { useEffect } from 'react';
+
 const schema = yup.object({
 	firstName: yup.string().required('This field is Required'),
 	lastName: yup.string().required('This field is Required'),
-	phoneNumber: yup
-		.number()
-		.min(10, 'Phone number must be at 10 digit')
-		.max(10, 'Phone number must be at 10 digit')
-		.required('This field is Required'),
+	phoneNumber: yup.string().required('This field is Required'),
 	email: yup.string().email().required('This field is Required'),
 	address: yup.string().required('This field is Required'),
 	state: yup.string().required('This field is Required'),
 	suburb: yup.string().required('This field is Required'),
-	postcode: yup
-		.number()
-		.min(4, 'Postal code must be at 4 digit')
-		.max(4, 'Postal code must be at 4 digit')
-		.required('This field is Required'),
+	postcode: yup.string().required('This field is Required'),
 });
 
 import { useForm } from 'react-hook-form';
-
-import style from './CheckOut.module.css';
 
 const stateData = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'];
 
@@ -36,22 +28,29 @@ export default function CheckOut() {
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
-	console.log(errors);
-	const onSubmit = (data) => console.log(data);
 
-	console.log(watch('firstName', { required: true }));
+	useEffect(() => {
+		let localCart = JSON.parse(window.localStorage.getItem('cart'));
+
+		if (!localCart) {
+			window.location.href = '/';
+		}
+	}, []);
+
+	const onSubmit = (data) => {
+		window.localStorage.setItem('userInformation', JSON.stringify(data));
+
+		window.location.href = '/order-complete';
+	};
 
 	return (
 		<>
 			<main className="container mb-8">
-				<h1 className={`${style['header']} mb-3`}>
-					Checkout page / Delivery Detail
-				</h1>
+				<h1 className="text-center mb-3">Checkout page / Delivery Detail</h1>
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
 						<form onSubmit={handleSubmit(onSubmit)} className="flex-row g-2">
@@ -67,6 +66,7 @@ export default function CheckOut() {
 							/>
 							<InputBox
 								label="Mobile Number"
+								maxLength="10"
 								{...register('phoneNumber', {
 									required: true,
 								})}
@@ -105,6 +105,7 @@ export default function CheckOut() {
 							</datalist>
 							<InputBox
 								label="Postcode"
+								maxLength="4"
 								{...register('postcode', { required: true })}
 								errorMessage={errors.postcode}
 							/>

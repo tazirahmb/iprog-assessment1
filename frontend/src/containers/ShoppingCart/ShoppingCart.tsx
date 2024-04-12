@@ -44,7 +44,7 @@ export default function ShoppingCart() {
 
 		if (itemQuantity === 1) {
 			confirmReduceItem = window.confirm(
-				'are you sure you want to remove item?',
+				'are you sure you want to remove selected item?',
 			);
 
 			if (confirmReduceItem) {

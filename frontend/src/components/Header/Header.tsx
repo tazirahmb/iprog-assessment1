@@ -4,6 +4,10 @@ import Link from 'next/link';
 
 import SearchBox from '@/components/SearchBox';
 
+// TODO: kudu pk state biar auto update
+const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
+const cartQtyTotal = cartItem.reduce((sum, { quantity }) => sum + quantity, 0);
+
 const Header = () => (
 	<header title="page-header" className={`${styles['header-wrapper']} py-2`}>
 		<div className="container">
@@ -28,7 +32,7 @@ const Header = () => (
 						padding: '8px 16px',
 					}}
 				>
-					Cart Dummy
+					Cart Dummy ({cartQtyTotal})
 				</Link>
 			</div>
 		</div>

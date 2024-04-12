@@ -10,7 +10,7 @@ const InputBox = React.forwardRef(
 			<div className={`col-6 ${style['input-box']}`}>
 				<label htmlFor={name}>{label}</label>
 				<input name={name} id={name} aria-label={label} ref={ref} {...props} />
-				<span style={{ color: 'red' }}>{errorMessage?.message}</span>
+				<span>{errorMessage?.message}</span>
 			</div>
 		);
 	},

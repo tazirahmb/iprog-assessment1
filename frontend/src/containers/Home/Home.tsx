@@ -58,7 +58,6 @@ export default function Home() {
 		e.preventDefault();
 
 		let shoppingCart = JSON.parse(window.localStorage.getItem('cart')) || [];
-		console.log('shopping cart before added', shoppingCart);
 
 		if (
 			shoppingCart.length === 0 ||
@@ -68,8 +67,6 @@ export default function Home() {
 		} else {
 			shoppingCart[checkCartIndex(shoppingCart, item._id)].quantity += 1;
 		}
-
-		console.log('shopping cart after added', shoppingCart);
 
 		window.localStorage.setItem('cart', JSON.stringify(shoppingCart));
 

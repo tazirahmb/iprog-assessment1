@@ -6,53 +6,43 @@ import ProductItem from '@/components/ProductItem';
 import Categories from '@/components/Categories';
 import NoData from '@/components/NoData/NoData';
 
-const dummyCategories = ['Frozen', 'Fresh', 'Beverages', 'Home', 'Pet-food'];
-
-const dummyData = [
-	{
-		_id: 1,
-		name: 'product 1',
-		image:
-			'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg',
-		unit: '500 gram',
-		price: 1.22,
-		stock: 4,
-	},
-	{
-		_id: 2,
-		name: 'product 2',
-		image:
-			'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg',
-		unit: 'Pack of 10',
-		price: 100,
-		stock: 10,
-	},
-	{ _id: 3, name: 'product 3', unit: 'Kilo', price: 5.4, stock: 0 },
-	{
-		_id: 4,
-		name: 'product 4',
-		image:
-			'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg',
-		unit: 'Cup',
-		price: 30,
-		stock: 3,
-	},
-	{
-		_id: 5,
-		name: 'product 5',
-		image:
-			'https://lasallefood.id/wp-content/uploads/2020/06/20190109_Packshoot-combination_Marjan.jpg',
-		unit: 'Litre',
-		price: 2.03,
-		stock: 34,
-	},
-];
+import { useState, useEffect } from 'react';
 
 function checkCartIndex(shoppingCart, _id) {
 	return shoppingCart.findIndex((cartItem) => cartItem._id === _id);
 }
 
 export default function Home() {
+	const [itemData, setItemData] = useState([]);
+	const [categoriesData, setCategoriesData] = useState([]);
+
+	useEffect(() => {
+		const queryString = window.location.search;
+
+		function fetchItemData() {
+			fetch('http://localhost:9000/getItems.php' + queryString)
+				.then((res) => res.text())
+				.then((res) => {
+					let rawItem = JSON.parse(res).map(({ price, stock, ...rest }) => ({
+						price: parseFloat(price),
+						stock: parseInt(stock, 10),
+						...rest,
+					}));
+					setItemData(rawItem);
+				})
+				.catch((err) => console.error(err));
+		}
+
+		function fetchCategoriesData() {
+			fetch('http://localhost:9000/getCategories.php')
+				.then((res) => res.text())
+				.then((res) => setCategoriesData(JSON.parse(res)))
+				.catch((err) => console.error(err));
+		}
+		fetchItemData();
+		fetchCategoriesData();
+	}, []);
+
 	function onClickAddToCart(e: { preventDefault: any }, item: object) {
 		//TODO: ini item kyknya bisa diluasin jadi interface lain?
 		e.preventDefault();
@@ -79,13 +69,13 @@ export default function Home() {
 			<main className="container">
 				<div className="flex-row g-2 my-5">
 					<aside className="col-2">
-						<Categories categories={dummyCategories} />
+						<Categories categories={categoriesData} />
 					</aside>
 					<section className="flex-row justify-content-start col gx-2 gy-3">
-						{dummyData.length === 0 ? (
+						{itemData.length === 0 ? (
 							<NoData />
 						) : (
-							dummyData.map((item) => (
+							itemData.map((item) => (
 								<ProductItem
 									item={item}
 									onClick={onClickAddToCart}

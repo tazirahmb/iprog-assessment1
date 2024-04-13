@@ -1,8 +1,8 @@
 const Categories = ({ categories }: CategoriesProps) => (
 	<nav className="flex-column justify-content-between g-1">
-		{categories.map((categoryItem) => (
-			<div key={categoryItem}>
-				<a href="#">{categoryItem}</a>
+		{categories.map(({ _id, name }) => (
+			<div key={_id}>
+				<a href={`?category=${_id}`}>{name}</a>
 			</div>
 		))}
 	</nav>
@@ -11,5 +11,8 @@ const Categories = ({ categories }: CategoriesProps) => (
 export default Categories;
 
 interface CategoriesProps {
-	categories: Array<string>;
+	categories: Array<{
+		_id: string;
+		name: string;
+	}>;
 }

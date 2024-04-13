@@ -17,6 +17,7 @@ export default function OrderConfirmation() {
 		);
 
 		if (!localCart && !localUserInformation) {
+			window.alert('Please checkout first.');
 			window.location.href = '/';
 		} else {
 			setShoppingCartItems(localCart);

@@ -37,6 +37,7 @@ export default function CheckOut() {
 		let localCart = JSON.parse(window.localStorage.getItem('cart'));
 
 		if (!localCart) {
+			window.alert('Please add some items to cart first before checkout.');
 			window.location.href = '/';
 		}
 	}, []);

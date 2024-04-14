@@ -32,7 +32,7 @@ const Header = () => (
 						padding: '8px 16px',
 					}}
 				>
-					Cart Dummy ({cartQtyTotal})
+					Cart Dummy
 				</Link>
 			</div>
 		</div>

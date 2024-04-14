@@ -12,12 +12,12 @@ import { useEffect } from 'react';
 const schema = yup.object({
 	firstName: yup.string().required('This field is Required'),
 	lastName: yup.string().required('This field is Required'),
-	phoneNumber: yup.string().required('This field is Required'),
+	phoneNumber: yup.number().required('This field is Required'),
 	email: yup.string().email().required('This field is Required'),
 	address: yup.string().required('This field is Required'),
 	state: yup.string().required('This field is Required'),
 	suburb: yup.string().required('This field is Required'),
-	postcode: yup.string().required('This field is Required'),
+	postcode: yup.number().required('This field is Required'),
 });
 
 import { useForm } from 'react-hook-form';
@@ -43,9 +43,26 @@ export default function CheckOut() {
 	}, []);
 
 	const onSubmit = (data) => {
-		window.localStorage.setItem('userInformation', JSON.stringify(data));
+		const formData = new FormData();
 
-		window.location.href = '/order-complete';
+		Object.keys(data).forEach((key) => formData.append(key, data[key]));
+
+		// append cart order
+		formData.append('order', window.localStorage.getItem('cart'));
+		fetch('http://localhost:9000/postOrder.php', {
+			method: 'POST',
+			body: formData,
+		})
+			.then((res) => res.text())
+			.then((res) => {
+				// dari success, generate order ID, lalu redirect sesuai order ID
+				// kalo gaada order ID, ya redirect ke halaman lain?
+				const orderId = JSON.parse(res)._id;
+				console.log(orderId);
+				// remove cart because order already placed
+				window.localStorage.removeItem('cart');
+				window.location.href = `/order-complete?orderId=${orderId}`;
+			});
 	};
 
 	return (
@@ -54,7 +71,11 @@ export default function CheckOut() {
 				<h1 className="text-center mb-3">Checkout page / Delivery Detail</h1>
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
-						<form onSubmit={handleSubmit(onSubmit)} className="flex-row g-2">
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className="flex-row g-2"
+							method="POST"
+						>
 							<InputBox
 								label="First Name"
 								{...register('firstName', { required: true })}

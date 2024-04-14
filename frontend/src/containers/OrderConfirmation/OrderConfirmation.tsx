@@ -5,35 +5,45 @@ import { useState, useEffect } from 'react';
 import SummaryItem from '@/components/SummaryItem';
 
 export default function OrderConfirmation() {
-	const dummyOrderNumber = Math.floor(Math.random() * 100000000);
+	const [orderData, setOrderData] = useState({});
 
-	const [shoppingCartItems, setShoppingCartItems] = useState([]);
-	const [userData, setUserData] = useState({});
+	function fetchOrderData() {
+		const queryString = window.location.search;
+		fetch('http://localhost:9000/getOrder.php' + queryString)
+			.then((res) => res.text())
+			.then((res) => {
+				console.log();
+				const parsedOrderData = JSON.parse(res)[0];
+				console.log(parsedOrderData);
+				const formattedOrderCart = JSON.parse(parsedOrderData.orders).map(
+					({ price, stock, quantity, ...rest }) => ({
+						price: parseFloat(price),
+						stock: parseInt(stock, 10),
+						quantity: parseInt(quantity, 10),
+						...rest,
+					}),
+				);
+				let formattedOrderData = {
+					...parsedOrderData,
+					orders: formattedOrderCart,
+					cartPriceTotal: formattedOrderCart.reduce(
+						(sum, { quantity, price }) => sum + quantity * price,
+						0,
+					),
+				};
+
+				setOrderData(formattedOrderData);
+			})
+			.catch((err) => console.error(err));
+	}
+
+	console.log(orderData);
 
 	useEffect(() => {
-		let localCart = JSON.parse(window.localStorage.getItem('cart'));
-		let localUserInformation = JSON.parse(
-			window.localStorage.getItem('userInformation'),
-		);
-
-		if (!localCart && !localUserInformation) {
-			window.alert('Please checkout first.');
-			window.location.href = '/';
-		} else {
-			setShoppingCartItems(localCart);
-			setUserData(localUserInformation);
-		}
+		fetchOrderData();
 	}, []);
 
-	const cartPriceTotal = shoppingCartItems.reduce(
-		(sum, { quantity, price }) => sum + quantity * price,
-		0,
-	);
-
 	function handleBackHome() {
-		window.localStorage.removeItem('cart');
-		window.localStorage.removeItem('userInformation');
-
 		window.location.href = '/';
 	}
 
@@ -45,7 +55,7 @@ export default function OrderConfirmation() {
 					<div className="col-6">
 						<p>
 							Thanks for shopping with us. Your invoice number is{' '}
-							<strong>{dummyOrderNumber}</strong> We also send your order
+							<strong>{orderData['order_id']}</strong> We also send your order
 							summary to your email.
 						</p>
 						<p>Here is your order summary:</p>
@@ -56,39 +66,34 @@ export default function OrderConfirmation() {
 									<td>
 										<strong>Full Name</strong>
 									</td>
-									<td>
-										{userData?.firstName} {userData?.lastName}
-									</td>
+									<td>{orderData['full_name']}</td>
 								</tr>
 								<tr>
 									<td>
 										<strong>Email</strong>
 									</td>
-									<td>{userData?.email}</td>
+									<td>{orderData['email']}</td>
 								</tr>
 								<tr>
 									<td>
 										<strong>Phone Number</strong>
 									</td>
-									<td>{userData?.phoneNumber}</td>
+									<td>{orderData['phone_number']}</td>
 								</tr>
 								<tr>
 									<td>
 										<strong>Address</strong>
 									</td>
-									<td>
-										{userData?.address}, {userData?.suburb} {userData?.state}{' '}
-										{userData?.postcode}
-									</td>
+									<td>{orderData['full_address']}</td>
 								</tr>
 							</table>
 							<h2>Ordered Item:</h2>
-							{shoppingCartItems.map((item) => (
+							{orderData.orders?.map((item) => (
 								<SummaryItem item={item} key={item._id} />
 							))}
 						</div>
 						<div>
-							<strong>Cart Total: A${cartPriceTotal}</strong>
+							<strong>Cart Total: A${orderData.cartPriceTotal}</strong>
 						</div>
 						<button
 							onClick={handleBackHome}

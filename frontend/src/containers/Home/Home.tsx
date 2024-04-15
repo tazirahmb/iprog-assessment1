@@ -14,7 +14,6 @@ function checkCartIndex(shoppingCart, _id) {
 
 export default function Home() {
 	const [itemData, setItemData] = useState([]);
-	const [categoriesData, setCategoriesData] = useState([]);
 
 	useEffect(() => {
 		const queryString = window.location.search;
@@ -32,15 +31,7 @@ export default function Home() {
 				})
 				.catch((err) => console.error(err));
 		}
-
-		function fetchCategoriesData() {
-			fetch('http://localhost:9000/getCategories.php')
-				.then((res) => res.text())
-				.then((res) => setCategoriesData(JSON.parse(res)))
-				.catch((err) => console.error(err));
-		}
 		fetchItemData();
-		fetchCategoriesData();
 	}, []);
 
 	function onClickAddToCart(e: { preventDefault: any }, item: object) {
@@ -66,25 +57,19 @@ export default function Home() {
 	return (
 		<>
 			<Header />
+			<Categories />
 			<main className="container">
-				<div className="flex-row g-2 my-5">
-					<aside className="col-2">
-						<Categories categories={categoriesData} />
-					</aside>
-					<section className="flex-row justify-content-start col gx-2 gy-3">
-						{itemData.length === 0 ? (
-							<NoData />
-						) : (
-							itemData.map((item) => (
-								<ProductItem
-									item={item}
-									onClick={onClickAddToCart}
-									key={item._id}
-								/>
-							))
-						)}
-					</section>
-				</div>
+				<section className="flex-row justify-content-start flex-spacing-3">
+					{itemData.length === 0 ? (
+						<NoData />
+					) : (
+						itemData.map((item) => (
+							<div className="col-3" key={item._id}>
+								<ProductItem item={item} onClick={onClickAddToCart} />
+							</div>
+						))
+					)}
+				</section>
 			</main>
 		</>
 	);

@@ -1,0 +1,21 @@
+.my-btn {
+  background-color: var(--primary);
+  width: 100%;
+  padding: 0 16px;
+  color: white;
+  font-weight: bold;
+  height: 48px;
+  border-radius: 12px;
+  box-shadow: none;
+  border: none;  
+}
+
+.my-btn:hover {
+  background-color: var(--primaryLight);
+  cursor: pointer;
+}
+
+.my-btn:disabled {
+  background-color: var(--neutralColorDark);
+  cursor: no-drop;
+}

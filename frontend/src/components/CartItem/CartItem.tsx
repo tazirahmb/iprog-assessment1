@@ -3,6 +3,8 @@ const dummyImg =
 
 import Image from 'next/image';
 
+import Button from '@/components/Button';
+
 const CartItem = ({
 	item,
 	handleAddQuantity,
@@ -24,12 +26,12 @@ const CartItem = ({
 				A${item.price} per {item.unit}
 			</p>
 			<p>qty: {item.quantity}</p>
-			<button
+			<Button
 				onClick={() => handleAddQuantity(item._id)}
 				disabled={item.quantity >= item.stock}
 			>
 				+
-			</button>
+			</Button>
 			<button onClick={() => handleReduceQuantity(item._id)}>-</button>
 			<div>
 				<strong>total Price: A${item.quantity * item.price}</strong>

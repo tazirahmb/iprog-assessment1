@@ -3,6 +3,8 @@
 // component
 import { useState, useEffect } from 'react';
 import SummaryItem from '@/components/SummaryItem';
+import Button from '@/components/Button';
+import Header from '@/components/Header';
 
 export default function OrderConfirmation() {
 	const [orderData, setOrderData] = useState({});
@@ -49,6 +51,7 @@ export default function OrderConfirmation() {
 
 	return (
 		<>
+			<Header minimum />
 			<main className="container mb-8">
 				<h1 className="text-center mb-3">Order Complete</h1>
 				<div className="flex-row justify-content-center">
@@ -95,7 +98,7 @@ export default function OrderConfirmation() {
 						<div>
 							<strong>Cart Total: A${orderData.cartPriceTotal}</strong>
 						</div>
-						<button
+						<Button
 							onClick={handleBackHome}
 							style={{
 								backgroundColor: 'yellow',
@@ -104,7 +107,7 @@ export default function OrderConfirmation() {
 							}}
 						>
 							Back to Home
-						</button>
+						</Button>
 					</div>
 				</div>
 			</main>

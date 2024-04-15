@@ -2,7 +2,9 @@
 
 // component
 // import Header from '@/components/Header';
-import InputBox from '@/components/InputBox/InputBox';
+import InputBox from '@/components/InputBox';
+import Button from '@/components/Button';
+import Header from '@/components/Header';
 // import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -67,6 +69,7 @@ export default function CheckOut() {
 
 	return (
 		<>
+			<Header minimum />
 			<main className="container mb-8">
 				<h1 className="text-center mb-3">Checkout page / Delivery Detail</h1>
 				<div className="flex-row justify-content-center">
@@ -131,7 +134,7 @@ export default function CheckOut() {
 								{...register('postcode', { required: true })}
 								errorMessage={errors.postcode}
 							/>
-							<button
+							<Button
 								// disabled={errors}
 								className="col-12"
 								style={{
@@ -142,7 +145,7 @@ export default function CheckOut() {
 								}}
 							>
 								Submit
-							</button>
+							</Button>
 						</form>
 					</div>
 				</div>

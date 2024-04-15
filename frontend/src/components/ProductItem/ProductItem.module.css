@@ -1,0 +1,11 @@
+.product-item {
+  border: 1px solid var(--neutralColor);
+  border-radius: 12px;
+  height: auto;
+  width: auto;
+}
+
+.product-item__content {
+  height: 100px;
+}
+

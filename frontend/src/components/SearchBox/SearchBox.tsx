@@ -1,4 +1,7 @@
 import Image from 'next/image';
+import Button from '@/components/Button';
+
+import style from './SearchBox.module.css';
 
 function redirectToSearch(query) {
 	window.location.search = `?search=${query}`;
@@ -25,17 +28,16 @@ const SearchBox = () => {
 				name="search"
 				placeholder="Search product..."
 				aria-label="searchbox-input"
-				className="mr-2 p-1"
+				className={`p-1 ${style['search-box']}`}
 				onKeyDown={handleSearchKeyDown}
 			/>
-			<button type="submit" aria-label="search-icon" className="p-1">
-				<Image
-					src="/icons/search.png"
-					width={24}
-					height={24}
-					alt="search-icon"
-				/>
-			</button>
+			<Button
+				type="submit"
+				aria-label="search-icon"
+				className={`${style['search-box__btn']}`}
+			>
+				Search
+			</Button>
 		</form>
 	);
 };

@@ -1,42 +1,61 @@
+'use client';
+
 import Image from 'next/image';
-import styles from './Header.module.css';
+import style from './Header.module.css';
 import Link from 'next/link';
 
 import SearchBox from '@/components/SearchBox';
+import { useMemo } from 'react';
 
-// TODO: kudu pk state biar auto update
-const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
-const cartQtyTotal = cartItem.reduce((sum, { quantity }) => sum + quantity, 0);
+const Header = ({ minimum }) => {
+	// TODO: update each item addded?
+	const cartQtyTotal = useMemo(() => {
+		const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
+		return `AU$${cartItem.reduce(
+			(sum, { quantity, price }) => sum + quantity * price,
+			0,
+		)}`;
+	}, []);
 
-const Header = () => (
-	<header title="page-header" className={`${styles['header-wrapper']} py-2`}>
-		<div className="container">
-			<div className="flex-row justify-content-between align-items-center">
-				<div className="product-logo flex-row align-items-center">
-					<Link href="/">
-						<Image
-							src="/logo_temp_1k.png"
-							width={80}
-							height={50}
-							alt="Online shop logo"
-						/>
-						<span>Tazirah on line shop</span>
-					</Link>
+	return (
+		<header title="page-header" className={`${style['header-wrapper']} py-1`}>
+			<div className="container">
+				<div className="flex-row justify-content-between align-items-center">
+					<div className="product-logo flex-row align-items-center">
+						<Link className={`${style['logo-link']} link-reset`} href="/">
+							<Image
+								src="/logo_temp_1k.png"
+								width={60}
+								height={40}
+								alt="Online shop logo"
+								className="mr-2"
+							/>
+							<span>
+								<strong>Tazirah</strong>
+								<br />
+								on line shop
+							</span>
+						</Link>
+					</div>
+					{!minimum && (
+						<>
+							<SearchBox />
+							<Link
+								href="/cart"
+								className={`link-reset py-2 px-1 ${style['cart']}`}
+								style={{
+									border: `1px solid --var(primary)`,
+									borderRadius: '12px',
+								}}
+							>
+								Cart ({cartQtyTotal})
+							</Link>
+						</>
+					)}
 				</div>
-				<SearchBox />
-				<Link
-					href="/cart"
-					style={{
-						backgroundColor: 'yellow',
-						fontWeight: 'bold',
-						padding: '8px 16px',
-					}}
-				>
-					Cart Dummy
-				</Link>
 			</div>
-		</div>
-	</header>
-);
+		</header>
+	);
+};
 
 export default Header;

@@ -5,7 +5,9 @@ import Header from '@/components/Header';
 import CartItem from '@/components/CartItem';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import NoData from '@/components/NoData/NoData';
+import NoData from '@/components/NoData';
+import Button from '@/components/Button';
+import Categories from '@/components/Categories';
 
 function checkCartIndex(shoppingCart, _id) {
 	return shoppingCart.findIndex((cartItem) => cartItem._id === _id);
@@ -80,16 +82,17 @@ export default function ShoppingCart() {
 	return (
 		<>
 			<Header />
+			<Categories />
 			<main className="container mb-8">
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
 						{shoppingCartItems.length === 0 ? (
-							<NoData />
+							<NoData message="Add item to your cart first" icon="🪹" />
 						) : (
 							<>
 								<h1>Shopping Cart</h1>
 								<div className="flex-column g-2 my-3">
-									<button onClick={resetCart}>Clear Cart</button>
+									<Button onClick={resetCart}>Clear Cart</Button>
 									{shoppingCartItems.map((item) => (
 										<CartItem
 											item={item}

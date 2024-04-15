@@ -29,10 +29,12 @@ const CartItem = ({
 				/>
 				<div className={style['cart-item__content']}>
 					<p className="mb-1">
-						<span className={style['cart-item__price']}>A${item.price}</span>{' '}
+						<span className={`text-size-sm ${style['cart-item__price']}`}>
+							A${item.price}
+						</span>{' '}
 						<span className={style['cart-item__unit']}>/ {item.unit}</span>
 					</p>
-					<h2 className="text-size-xs">{item.name}</h2>
+					<h2 className="text-size-md">{item.name}</h2>
 				</div>
 			</div>
 			<div

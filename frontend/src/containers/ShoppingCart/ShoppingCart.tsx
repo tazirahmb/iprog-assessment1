@@ -132,7 +132,7 @@ export default function ShoppingCart() {
 								</div>
 								<div className="flex-row justify-content-end align-items-center">
 									<span>Cart Total:</span>
-									<span className="mx-2 text-size-md">
+									<span className="mx-2 text-size-lg">
 										<strong>A${cartPriceTotal}</strong>
 									</span>
 									<Link

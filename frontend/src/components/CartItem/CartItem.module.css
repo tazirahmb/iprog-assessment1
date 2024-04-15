@@ -15,7 +15,6 @@
 
 .cart-item__unit {
   color: var(--neutralColorDark);
-  font-size: 1rem;
 }
 
 .cart-item__count button {

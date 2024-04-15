@@ -2,9 +2,11 @@
 
 // component
 import { useState, useEffect } from 'react';
-import SummaryItem from '@/components/SummaryItem';
+import CartItem from '@/components/CartItem';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
+
+import style from './OrderConfirmation.module.css';
 
 export default function OrderConfirmation() {
 	const [orderData, setOrderData] = useState({});
@@ -14,9 +16,7 @@ export default function OrderConfirmation() {
 		fetch('http://localhost:9000/getOrder.php' + queryString)
 			.then((res) => res.text())
 			.then((res) => {
-				console.log();
 				const parsedOrderData = JSON.parse(res)[0];
-				console.log(parsedOrderData);
 				const formattedOrderCart = JSON.parse(parsedOrderData.orders).map(
 					({ price, stock, quantity, ...rest }) => ({
 						price: parseFloat(price),
@@ -39,8 +39,6 @@ export default function OrderConfirmation() {
 			.catch((err) => console.error(err));
 	}
 
-	console.log(orderData);
-
 	useEffect(() => {
 		fetchOrderData();
 	}, []);
@@ -53,17 +51,19 @@ export default function OrderConfirmation() {
 		<>
 			<Header minimum />
 			<main className="container mb-8">
-				<h1 className="text-center mb-3">Order Complete</h1>
+				<h1 className={`mb-2 mt-6 ${style['text-center']}`}>Order Complete</h1>
+				<p className={`text-size-xl mb-3 ${style['text-center']}`}>
+					partypoopericonhere
+				</p>
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
 						<p>
 							Thanks for shopping with us. Your invoice number is{' '}
 							<strong>{orderData['order_id']}</strong> We also send your order
-							summary to your email.
+							summary to your email. Here is your order summary:
 						</p>
-						<p>Here is your order summary:</p>
 						<div className="flex-column">
-							<h2>Personal Information:</h2>
+							<h2 className="my-2">Personal Information</h2>
 							<table>
 								<tr>
 									<td>
@@ -90,22 +90,20 @@ export default function OrderConfirmation() {
 									<td>{orderData['full_address']}</td>
 								</tr>
 							</table>
-							<h2>Ordered Item:</h2>
+							<h2 className="my-2">Ordered Item</h2>
 							{orderData.orders?.map((item) => (
-								<SummaryItem item={item} key={item._id} />
+								<div className="mb-2" key={item._id}>
+									<CartItem item={item} readOnly />
+								</div>
 							))}
 						</div>
-						<div>
-							<strong>Cart Total: A${orderData.cartPriceTotal}</strong>
+						<div className="flex-row justify-content-end align-items-center my-2">
+							<span>Cart Total:</span>
+							<span className="ml-2 text-size-lg">
+								<strong>A${orderData.cartPriceTotal}</strong>
+							</span>
 						</div>
-						<Button
-							onClick={handleBackHome}
-							style={{
-								backgroundColor: 'yellow',
-								fontWeight: 'bold',
-								padding: '8px 16px',
-							}}
-						>
+						<Button onClick={handleBackHome} className="my-btn">
 							Back to Home
 						</Button>
 					</div>

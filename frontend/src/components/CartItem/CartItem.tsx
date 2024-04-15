@@ -9,6 +9,7 @@ import style from './CartItem.module.css';
 
 const CartItem = ({
 	item,
+	readOnly,
 	handleUpdateQuantity,
 	handleAddQuantity,
 	handleReduceQuantity,
@@ -37,27 +38,29 @@ const CartItem = ({
 			<div
 				className={`flex-column align-items-end g-2 ${style['cart-item__count']}`}
 			>
-				<div>
-					<Button
-						className={style['cart-item__count__button-min']}
-						onClick={() => handleReduceQuantity(item._id)}
-					>
-						-
-					</Button>
-					<input
-						className={`my-input-style ${style['cart-item__count__input']}`}
-						value={item.quantity}
-						onChange={(e) => handleUpdateQuantity(e, item._id)}
-						name="itemQty"
-					/>
-					<Button
-						className={style['cart-item__count__button-plus']}
-						onClick={() => handleAddQuantity(item._id)}
-						disabled={item.quantity >= item.stock}
-					>
-						+
-					</Button>
-				</div>
+				{!readOnly && (
+					<div>
+						<Button
+							className={style['cart-item__count__button-min']}
+							onClick={() => handleReduceQuantity(item._id)}
+						>
+							-
+						</Button>
+						<input
+							className={`my-input-style ${style['cart-item__count__input']}`}
+							value={item.quantity}
+							onChange={(e) => handleUpdateQuantity(e, item._id)}
+							name="itemQty"
+						/>
+						<Button
+							className={style['cart-item__count__button-plus']}
+							onClick={() => handleAddQuantity(item._id)}
+							disabled={item.quantity >= item.stock}
+						>
+							+
+						</Button>
+					</div>
+				)}
 				<span className={`${style['cart-item__count__total-price']}`}>
 					total Price: <strong>A${item.quantity * item.price}</strong>
 				</span>

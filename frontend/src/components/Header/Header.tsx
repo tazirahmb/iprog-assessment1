@@ -20,7 +20,9 @@ const Header = ({ minimum }) => {
 	return (
 		<header title="page-header" className={`${style['header-wrapper']} py-1`}>
 			<div className="container">
-				<div className="flex-row justify-content-between align-items-center">
+				<div
+					className={`flex-row justify-content${minimum ? '-center' : '-between'} align-items-center`}
+				>
 					<div className="product-logo flex-row align-items-center">
 						<Link className={`${style['logo-link']} link-reset`} href="/">
 							<Image

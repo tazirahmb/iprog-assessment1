@@ -62,7 +62,6 @@ export default function CheckOut() {
 				// dari success, generate order ID, lalu redirect sesuai order ID
 				// kalo gaada order ID, ya redirect ke halaman lain?
 				const orderId = JSON.parse(res)._id;
-				console.log(orderId);
 				// remove cart because order already placed
 				window.localStorage.removeItem('cart');
 				window.location.href = `/order-complete?orderId=${orderId}`;
@@ -149,7 +148,7 @@ export default function CheckOut() {
 								errorMessage={errors.postcode}
 							/>
 							<Button
-								// disabled={errors}
+								// disabled={errors} TODO: disable button when error after clicked?
 								className="col-12 my-btn mt-2"
 							>
 								Submit

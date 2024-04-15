@@ -26,6 +26,12 @@ body {
 }
 
 /* default input style */
+.my-input-label {
+  font-size: 14px;
+  color: var(--neutralColorDark);
+  margin-bottom: 8px;
+}
+
 .my-input-style {
   border-radius: 12px;
   height: 48px;
@@ -33,6 +39,7 @@ body {
   border: 1px solid var(--neutralColorLight);
   border-left: none;
   box-shadow: none;
+  padding: 16px;
 }
 
 .my-input-style:hover {

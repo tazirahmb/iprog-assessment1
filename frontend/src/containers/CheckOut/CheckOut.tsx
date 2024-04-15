@@ -9,6 +9,8 @@ import Header from '@/components/Header';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import style from './CheckOut.module.css';
+
 import { useEffect } from 'react';
 
 const schema = yup.object({
@@ -70,23 +72,27 @@ export default function CheckOut() {
 	return (
 		<>
 			<Header minimum />
-			<main className="container mb-8">
-				<h1 className="text-center mb-3">Checkout page / Delivery Detail</h1>
+			<main className="container my-8">
+				<h1 className={`mx-auto mb-3 text-size-lg ${style['text-center']}`}>
+					Delivery Detail
+				</h1>
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
 						<form
 							onSubmit={handleSubmit(onSubmit)}
-							className="flex-row g-2"
+							className="flex-row flex-spacing-2"
 							method="POST"
 						>
 							<InputBox
 								label="First Name"
 								{...register('firstName', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.firstName}
 							/>
 							<InputBox
 								label="Last Name"
 								{...register('lastName', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.lastName}
 							/>
 							<InputBox
@@ -95,24 +101,30 @@ export default function CheckOut() {
 								{...register('phoneNumber', {
 									required: true,
 								})}
+								className="my-input-style"
 								errorMessage={errors.phoneNumber}
 							/>
 							<InputBox
 								label="Email"
 								{...register('email', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.email}
 							/>
-							<h2 className="col-12">
-								<strong>Address Information</strong>
+							<h2
+								className={`col-12 text-size-md mt-2 ${style['text-center']}`}
+							>
+								Address Information
 							</h2>
 							<InputBox
 								label="Address"
 								{...register('address', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.address}
 							/>
 							<InputBox
 								label="Suburb"
 								{...register('suburb', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.suburb}
 							/>
 							{/* Should be dropdown */}
@@ -120,6 +132,7 @@ export default function CheckOut() {
 								label="State"
 								list="state-list"
 								{...register('state', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.state}
 							/>
 							{/* datalist of state */}
@@ -132,17 +145,12 @@ export default function CheckOut() {
 								label="Postcode"
 								maxLength="4"
 								{...register('postcode', { required: true })}
+								className="my-input-style"
 								errorMessage={errors.postcode}
 							/>
 							<Button
 								// disabled={errors}
-								className="col-12"
-								style={{
-									backgroundColor: 'yellow',
-									fontWeight: 'bold',
-									padding: '8px 16px',
-									textAlign: 'center',
-								}}
+								className="col-12 my-btn mt-2"
 							>
 								Submit
 							</Button>

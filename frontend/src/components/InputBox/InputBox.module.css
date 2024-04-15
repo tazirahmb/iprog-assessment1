@@ -3,6 +3,6 @@
 }
 
 .input-box span {
-  color: red;
+  color: var(--primary);
   font-size: 10px;
 }

@@ -9,6 +9,8 @@ import NoData from '@/components/NoData';
 import Button from '@/components/Button';
 import Categories from '@/components/Categories';
 
+import style from './ShoppingCart.module.css';
+
 function checkCartIndex(shoppingCart, _id) {
 	return shoppingCart.findIndex((cartItem) => cartItem._id === _id);
 }
@@ -34,6 +36,24 @@ export default function ShoppingCart() {
 		let variableShoppingCart = [...shoppingCartItems];
 		variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity +=
 			1;
+
+		handleUpdateCartData(variableShoppingCart);
+	}
+
+	function handleUpdateQuantity(e, _id) {
+		let newCartQty = parseInt(e.target.value, 10);
+		console.log(newCartQty);
+		let variableShoppingCart = [...shoppingCartItems];
+		const currentCartQty =
+			variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity;
+
+		if (newCartQty === 0) newCartQty = 1;
+		else if (newCartQty > currentCartQty) newCartQty = currentCartQty;
+		console.log(currentCartQty);
+		console.log(newCartQty);
+
+		variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity =
+			newCartQty;
 
 		handleUpdateCartData(variableShoppingCart);
 	}
@@ -90,31 +110,38 @@ export default function ShoppingCart() {
 							<NoData message="Add item to your cart first" icon="🪹" />
 						) : (
 							<>
-								<h1>Shopping Cart</h1>
+								<div className="flex-row justify-content-between mt-6">
+									<h1 className="text-size-lg">Shopping Cart</h1>
+									<Button
+										className={style['button__clear-cart']}
+										onClick={resetCart}
+									>
+										Clear Cart
+									</Button>
+								</div>
 								<div className="flex-column g-2 my-3">
-									<Button onClick={resetCart}>Clear Cart</Button>
 									{shoppingCartItems.map((item) => (
 										<CartItem
 											item={item}
+											handleUpdateQuantity={handleUpdateQuantity}
 											handleAddQuantity={handleAddQuantity}
 											handleReduceQuantity={handleReduceQuantity}
 											key={item._id}
 										/>
 									))}
 								</div>
-								<div>
-									<strong>Cart Total: A${cartPriceTotal}</strong>
+								<div className="flex-row justify-content-end align-items-center">
+									<span>Cart Total:</span>
+									<span className="mx-2 text-size-md">
+										<strong>A${cartPriceTotal}</strong>
+									</span>
+									<Link
+										href="/checkout"
+										className={`my-btn link-reset ${style['checkout-btn']}`}
+									>
+										Checkout
+									</Link>
 								</div>
-								<Link
-									href="/checkout"
-									style={{
-										backgroundColor: 'yellow',
-										fontWeight: 'bold',
-										padding: '8px 16px',
-									}}
-								>
-									Go to Checkout page
-								</Link>
 							</>
 						)}
 					</div>

@@ -28,7 +28,7 @@ const SearchBox = () => {
 				name="search"
 				placeholder="Search product..."
 				aria-label="searchbox-input"
-				className={`p-1 ${style['search-box']}`}
+				className={`p-1 my-input-style ${style['search-box']}`}
 				onKeyDown={handleSearchKeyDown}
 			/>
 			<Button

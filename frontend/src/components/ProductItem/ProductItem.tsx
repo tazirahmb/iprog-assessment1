@@ -19,10 +19,11 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 				priority
 			/>
 			<div className={`${style['product-item__content']} my-1`}>
-				<h2 className="text-size-xs mb-1">{item.name}</h2>
-				<p>
-					A${item.price} per {item.unit}
+				<p className="mt-2 mb-1">
+					<span className={style['product-item__price']}>A${item.price}</span>{' '}
+					<span className={style['product-item__unit']}>/ {item.unit}</span>
 				</p>
+				<h2 className="text-size-xs">{item.name}</h2>
 			</div>
 			<Button disabled={isSoldOut} onClick={(e) => onClick(e, item)}>
 				{isSoldOut ? 'Sold Out' : 'Add to Cart'}

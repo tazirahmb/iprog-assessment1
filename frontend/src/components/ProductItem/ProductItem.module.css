@@ -9,3 +9,15 @@
   height: 100px;
 }
 
+.product-item__content h2 {
+  font-weight: normal;
+}
+
+.product-item__price {
+  font-weight: bold;
+}
+
+.product-item__unit {
+  color: var(--neutralColorDark);
+  font-size: 1rem;
+}

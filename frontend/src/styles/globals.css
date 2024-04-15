@@ -24,3 +24,48 @@ body {
 ::-moz-selection {
 	background-color: var(--accentColor);
 }
+
+/* default input style */
+.my-input-style {
+  border-radius: 12px;
+  height: 48px;
+  width: auto;
+  border: 1px solid var(--neutralColorLight);
+  border-left: none;
+  box-shadow: none;
+}
+
+.my-input-style:hover {
+  border-color: var(--primaryLight);
+  outline: none;
+  box-shadow: inset 0 0 0 0.1rem var(--primaryLight);
+}
+
+.my-input-style:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: inset 0 0 0 0.1rem var(--primary);
+}
+
+/* default button style */
+.my-btn {
+  background-color: var(--primary);
+  width: 100%;
+  padding: 0 16px;
+  color: white;
+  font-weight: bold;
+  height: 48px;
+  border-radius: 12px;
+  box-shadow: none;
+  border: none;  
+}
+
+.my-btn:hover {
+  background-color: var(--primaryLight);
+  cursor: pointer;
+}
+
+.my-btn:disabled {
+  background-color: var(--neutralColorDark);
+  cursor: no-drop;
+}

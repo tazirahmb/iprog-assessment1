@@ -41,16 +41,17 @@ export default function ShoppingCart() {
 	}
 
 	function handleUpdateQuantity(e, _id) {
+		console.log(_id);
 		let newCartQty = parseInt(e.target.value, 10);
 		console.log(newCartQty);
 		let variableShoppingCart = [...shoppingCartItems];
-		const currentCartQty =
-			variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity;
+		console.log(variableShoppingCart);
+		console.log(checkCartIndex(variableShoppingCart, _id));
+		const maximumStock =
+			variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].stock;
 
-		if (newCartQty === 0) newCartQty = 1;
-		else if (newCartQty > currentCartQty) newCartQty = currentCartQty;
-		console.log(currentCartQty);
-		console.log(newCartQty);
+		if (newCartQty === 0 || isNaN(newCartQty)) newCartQty = 1;
+		else if (newCartQty > maximumStock) newCartQty = maximumStock;
 
 		variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity =
 			newCartQty;
@@ -139,7 +140,7 @@ export default function ShoppingCart() {
 										href="/checkout"
 										className={`my-btn link-reset ${style['checkout-btn']}`}
 									>
-										Checkout
+										Place an Order
 									</Link>
 								</div>
 							</>

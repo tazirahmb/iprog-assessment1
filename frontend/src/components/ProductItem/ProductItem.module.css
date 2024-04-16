@@ -5,6 +5,10 @@
   width: auto;
 }
 
+.product-item:hover {
+  border-color: var(--primary);
+}
+
 .product-item__content {
   height: 100px;
 }

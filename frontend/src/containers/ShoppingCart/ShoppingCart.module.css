@@ -9,11 +9,10 @@
   color: var(--primaryLight);
 }
 
-
 .checkout-btn {
   color: white !important;
   padding: 4px 16px;
   font-size: 1rem;
   height: auto;
-  width: 115px;
+  width: 165px;
 }

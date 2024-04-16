@@ -11,9 +11,6 @@ const Categories = () => {
 	const queryString = window.location.search;
 	const params = new URLSearchParams(queryString);
 	const selectedCategory = params.get('category');
-
-	console.log(selectedCategory);
-
 	useEffect(() => {
 		function fetchCategoriesData() {
 			fetch('http://localhost:9000/getCategories.php')

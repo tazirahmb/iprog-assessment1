@@ -5,11 +5,14 @@ import { useState, useEffect } from 'react';
 import CartItem from '@/components/CartItem';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
+import LoadingSpinner from '@/components/Loading';
 
 import style from './OrderConfirmation.module.css';
+import NoData from '@/components/NoData';
 
 export default function OrderConfirmation() {
 	const [orderData, setOrderData] = useState({});
+	const [loading, setLoading] = useState(true);
 
 	function fetchOrderData() {
 		const queryString = window.location.search;
@@ -36,7 +39,8 @@ export default function OrderConfirmation() {
 
 				setOrderData(formattedOrderData);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => console.error(err))
+			.finally(() => setLoading(false));
 	}
 
 	useEffect(() => {
@@ -47,23 +51,34 @@ export default function OrderConfirmation() {
 		window.location.href = '/';
 	}
 
+	if (loading)
+		return (
+			<div
+				className="flex-row align-items-center justify-content-center"
+				style={{ width: '100vw', height: '100vh' }}
+			>
+				<LoadingSpinner />
+			</div>
+		);
+	if (Object.keys(orderData).length === 0) return <NoData />;
+
 	return (
 		<>
 			<Header minimum />
 			<main className="container mb-8">
-				<h1 className={`mb-2 mt-6 ${style['text-center']}`}>Order Complete</h1>
-				<p className={`text-size-xl mb-3 ${style['text-center']}`}>
-					partypoopericonhere
-				</p>
+				<p className={`text-size-xl mt-6 ${style['text-center']}`}>🎉</p>
+				<h1 className={`my-2 ${style['text-center']}`}>Order Complete</h1>
 				<div className="flex-row justify-content-center">
 					<div className="col-6">
-						<p>
+						<p className="text-size-md">
 							Thanks for shopping with us. Your invoice number is{' '}
 							<strong>{orderData['order_id']}</strong> We also send your order
 							summary to your email. Here is your order summary:
 						</p>
 						<div className="flex-column">
-							<h2 className="my-2">Personal Information</h2>
+							<h2 className={`${style['text-center']} my-2`}>
+								Personal Information
+							</h2>
 							<table>
 								<tr>
 									<td>
@@ -90,7 +105,7 @@ export default function OrderConfirmation() {
 									<td>{orderData['full_address']}</td>
 								</tr>
 							</table>
-							<h2 className="my-2">Ordered Item</h2>
+							<h2 className={`${style['text-center']} my-2`}>Ordered Item</h2>
 							{orderData.orders?.map((item) => (
 								<div className="mb-2" key={item._id}>
 									<CartItem item={item} readOnly />
@@ -98,7 +113,7 @@ export default function OrderConfirmation() {
 							))}
 						</div>
 						<div className="flex-row justify-content-end align-items-center my-2">
-							<span>Cart Total:</span>
+							<span>Cart Total</span>
 							<span className="ml-2 text-size-lg">
 								<strong>A${orderData.cartPriceTotal}</strong>
 							</span>

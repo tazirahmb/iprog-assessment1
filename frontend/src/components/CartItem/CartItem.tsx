@@ -40,7 +40,9 @@ const CartItem = ({
 			<div
 				className={`flex-column align-items-end g-2 ${style['cart-item__count']}`}
 			>
-				{!readOnly && (
+				{readOnly ? (
+					<span className={style['cart-item__unit']}>Qty: {item.quantity}</span>
+				) : (
 					<div>
 						<Button
 							className={style['cart-item__count__button-min']}

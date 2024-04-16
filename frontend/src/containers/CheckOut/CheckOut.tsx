@@ -32,7 +32,7 @@ export default function CheckOut() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { isValid, errors, submitCount },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
@@ -148,7 +148,8 @@ export default function CheckOut() {
 								errorMessage={errors.postcode}
 							/>
 							<Button
-								// disabled={errors} TODO: disable button when error after clicked?
+								type="submit"
+								disabled={!isValid && submitCount > 0} // TODO: disable button when error after clicked?
 								className="col-12 my-btn mt-2"
 							>
 								Submit

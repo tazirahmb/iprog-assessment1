@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import ProductItem from '@/components/ProductItem';
 import Categories from '@/components/Categories';
 import NoData from '@/components/NoData/NoData';
+import LoadingSpinner from '@/components/Loading';
 
 import { useState, useEffect } from 'react';
 
@@ -14,6 +15,7 @@ function checkCartIndex(shoppingCart, _id) {
 
 export default function Home() {
 	const [itemData, setItemData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const queryString = window.location.search;
@@ -29,7 +31,8 @@ export default function Home() {
 					}));
 					setItemData(rawItem);
 				})
-				.catch((err) => console.error(err));
+				.catch((err) => console.error(err))
+				.finally(() => setLoading(false));
 		}
 		fetchItemData();
 	}, []);
@@ -60,7 +63,9 @@ export default function Home() {
 			<Categories />
 			<main className="container">
 				<section className="flex-row justify-content-start flex-spacing-3">
-					{itemData.length === 0 ? (
+					{loading ? (
+						<LoadingSpinner />
+					) : itemData.length === 0 ? (
 						<NoData />
 					) : (
 						itemData.map((item) => (

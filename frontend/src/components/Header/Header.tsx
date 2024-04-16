@@ -5,17 +5,17 @@ import style from './Header.module.css';
 import Link from 'next/link';
 
 import SearchBox from '@/components/SearchBox';
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 
 const Header = ({ minimum }) => {
-	// TODO: update each item addded?
-	const cartQtyTotal = useMemo(() => {
-		const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
-		return `AU$${cartItem.reduce(
-			(sum, { quantity, price }) => sum + quantity * price,
-			0,
-		)}`;
-	}, []);
+	// // TODO: update each item addded?
+	// const cartQtyTotal = useMemo(() => {
+	// 	const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
+	// 	return `AU$${cartItem.reduce(
+	// 		(sum, { quantity, price }) => sum + quantity * price,
+	// 		0,
+	// 	)}`;
+	// }, []);
 
 	return (
 		<header title="page-header" className={`${style['header-wrapper']} py-1`}>
@@ -50,7 +50,7 @@ const Header = ({ minimum }) => {
 									borderRadius: '12px',
 								}}
 							>
-								Cart ({cartQtyTotal})
+								Cart
 							</Link>
 						</>
 					)}

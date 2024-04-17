@@ -1,7 +1,6 @@
 'use client';
 
 // component
-import { useState, useEffect } from 'react';
 import CartItem from '@/components/CartItem';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
@@ -10,56 +9,17 @@ import LoadingSpinner from '@/components/Loading';
 import style from './OrderConfirmation.module.css';
 import NoData from '@/components/NoData';
 
+import getOrder from '@/services/apis/getOrder';
+import useFetch from '@/services/hooks/useFetch';
+
 export default function OrderConfirmation() {
-	const [orderData, setOrderData] = useState({});
-	const [loading, setLoading] = useState(true);
-
-	function fetchOrderData() {
-		const queryString = window.location.search;
-		fetch('http://localhost:9000/getOrder.php' + queryString)
-			.then((res) => res.text())
-			.then((res) => {
-				const parsedOrderData = JSON.parse(res)[0];
-				const formattedOrderCart = JSON.parse(parsedOrderData.orders).map(
-					({ price, stock, quantity, ...rest }) => ({
-						price: parseFloat(price),
-						stock: parseInt(stock, 10),
-						quantity: parseInt(quantity, 10),
-						...rest,
-					}),
-				);
-				let formattedOrderData = {
-					...parsedOrderData,
-					orders: formattedOrderCart,
-					cartPriceTotal: formattedOrderCart.reduce(
-						(sum, { quantity, price }) => sum + quantity * price,
-						0,
-					),
-				};
-
-				setOrderData(formattedOrderData);
-			})
-			.catch((err) => console.error(err))
-			.finally(() => setLoading(false));
-	}
-
-	useEffect(() => {
-		fetchOrderData();
-	}, []);
-
 	function handleBackHome() {
 		window.location.href = '/';
 	}
 
-	if (loading)
-		return (
-			<div
-				className="flex-row align-items-center justify-content-center"
-				style={{ width: '100vw', height: '100vh' }}
-			>
-				<LoadingSpinner />
-			</div>
-		);
+	const { loading, fetchedData: orderData } = useFetch(getOrder);
+
+	if (loading) return <LoadingSpinner />;
 	if (Object.keys(orderData).length === 0) return <NoData />;
 
 	return (

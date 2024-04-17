@@ -1,26 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
 import style from './Categories.module.css';
 
-const Categories = () => {
-	const [categoriesData, setCategoriesData] = useState([]);
+import getCategories from '@/services/apis/getCategories';
+import useFetch from '@/services/hooks/useFetch';
 
+const Categories = () => {
 	// get categories ID
 	const queryString = window.location.search;
 	const params = new URLSearchParams(queryString);
 	const selectedCategory = params.get('category');
-	useEffect(() => {
-		function fetchCategoriesData() {
-			fetch('http://localhost:9000/getCategories.php')
-				.then((res) => res.text())
-				.then((res) => setCategoriesData(JSON.parse(res)))
-				.catch((err) => console.error(err));
-		}
 
-		fetchCategoriesData();
-	}, []);
+	const { fetchedData: categoriesData } = useFetch(getCategories);
 
 	return (
 		<nav className={`${style['categories-wrapper']} mb-2`}>

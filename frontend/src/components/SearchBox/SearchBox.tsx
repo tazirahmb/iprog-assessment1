@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Button from '@/components/Button';
 
 import style from './SearchBox.module.css';
@@ -28,7 +27,7 @@ const SearchBox = () => {
 				name="search"
 				placeholder="Search product..."
 				aria-label="searchbox-input"
-				className={`p-1 my-input-style ${style['search-box']}`}
+				className={`my-input-style ${style['search-box']}`}
 				onKeyDown={handleSearchKeyDown}
 			/>
 			<Button

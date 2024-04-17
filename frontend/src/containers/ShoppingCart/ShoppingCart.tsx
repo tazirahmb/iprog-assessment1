@@ -11,13 +11,16 @@ import Categories from '@/components/Categories';
 
 import style from './ShoppingCart.module.css';
 
-function checkCartIndex(shoppingCart, _id) {
-	return shoppingCart.findIndex((cartItem) => cartItem._id === _id);
-}
+import { handleUpdateCartData, getCartPriceTotal } from '@/utils/cartHelpers';
 
 export default function ShoppingCart() {
-	// TODO: ganti jadi useMemo or useCallback?
 	const [shoppingCartItems, setShoppingCartItems] = useState([]);
+
+	function updateCartState(cartItems = []) {
+		setShoppingCartItems(cartItems);
+
+		window.localStorage.setItem('cart', JSON.stringify(cartItems));
+	}
 
 	useEffect(() => {
 		let storageCartItems =
@@ -26,79 +29,8 @@ export default function ShoppingCart() {
 		setShoppingCartItems(storageCartItems);
 	}, []);
 
-	function handleUpdateCartData(cartItems = []) {
-		setShoppingCartItems(cartItems);
-
-		window.localStorage.setItem('cart', JSON.stringify(cartItems));
-	}
-
-	function handleAddQuantity(_id) {
-		let variableShoppingCart = [...shoppingCartItems];
-		variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity +=
-			1;
-
-		handleUpdateCartData(variableShoppingCart);
-	}
-
-	function handleUpdateQuantity(e, _id) {
-		console.log(_id);
-		let newCartQty = parseInt(e.target.value, 10);
-		console.log(newCartQty);
-		let variableShoppingCart = [...shoppingCartItems];
-		console.log(variableShoppingCart);
-		console.log(checkCartIndex(variableShoppingCart, _id));
-		const maximumStock =
-			variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].stock;
-
-		if (newCartQty === 0 || isNaN(newCartQty)) newCartQty = 1;
-		else if (newCartQty > maximumStock) newCartQty = maximumStock;
-
-		variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity =
-			newCartQty;
-
-		handleUpdateCartData(variableShoppingCart);
-	}
-
-	function handleReduceQuantity(_id) {
-		let variableShoppingCart = [...shoppingCartItems];
-		let itemQuantity =
-			variableShoppingCart[checkCartIndex(variableShoppingCart, _id)].quantity;
-		let confirmReduceItem = true;
-
-		if (itemQuantity === 1) {
-			confirmReduceItem = window.confirm(
-				'are you sure you want to remove selected item?',
-			);
-
-			if (confirmReduceItem) {
-				variableShoppingCart.splice(
-					variableShoppingCart.findIndex((item) => item._id === _id),
-					1,
-				);
-			}
-		} else {
-			variableShoppingCart[
-				checkCartIndex(variableShoppingCart, _id)
-			].quantity -= 1;
-		}
-
-		handleUpdateCartData(variableShoppingCart);
-	}
-
-	const cartPriceTotal = shoppingCartItems.reduce(
-		(sum, { quantity, price }) => sum + quantity * price,
-		0,
-	);
-
-	function resetCart() {
-		let confirmEmptyCart = window.confirm(
-			'are you sure you want to remove all item(s) in the cart?',
-		);
-
-		if (confirmEmptyCart) {
-			handleUpdateCartData();
-		}
-	}
+	const { modifyItemQuantity, addItemQuantity, reduceItemQuantity, resetCart } =
+		handleUpdateCartData(shoppingCartItems, updateCartState);
 
 	return (
 		<>
@@ -124,9 +56,9 @@ export default function ShoppingCart() {
 									{shoppingCartItems.map((item) => (
 										<CartItem
 											item={item}
-											handleUpdateQuantity={handleUpdateQuantity}
-											handleAddQuantity={handleAddQuantity}
-											handleReduceQuantity={handleReduceQuantity}
+											handleUpdateQuantity={modifyItemQuantity}
+											handleAddQuantity={addItemQuantity}
+											handleReduceQuantity={reduceItemQuantity}
 											key={item._id}
 										/>
 									))}
@@ -134,7 +66,7 @@ export default function ShoppingCart() {
 								<div className="flex-row justify-content-end align-items-center">
 									<span>Cart Total:</span>
 									<span className="mx-2 text-size-lg">
-										<strong>A${cartPriceTotal}</strong>
+										<strong>A${getCartPriceTotal(shoppingCartItems)}</strong>
 									</span>
 									<Link
 										href="/checkout"

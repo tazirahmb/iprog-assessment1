@@ -1,17 +1,17 @@
 'use client';
 
 // component
-// import Header from '@/components/Header';
 import InputBox from '@/components/InputBox';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
-// import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import style from './CheckOut.module.css';
 
+import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import postOrder from '@/services/apis/postOrder';
 
 const schema = yup.object({
 	firstName: yup.string().required('This field is Required'),
@@ -24,9 +24,22 @@ const schema = yup.object({
 	postcode: yup.number().required('This field is Required'),
 });
 
-import { useForm } from 'react-hook-form';
-
 const stateData = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'];
+
+const onSubmit = (data) => {
+	const formData = new FormData();
+
+	Object.keys(data).forEach((key) => formData.append(key, data[key]));
+
+	// append cart order
+	formData.append('order', window.localStorage.getItem('cart'));
+
+	postOrder(formData).then((orderId) => {
+		// remove cart because order already placed
+		window.localStorage.removeItem('cart');
+		window.location.href = `/order-complete?orderId=${orderId}`;
+	});
+};
 
 export default function CheckOut() {
 	const {
@@ -45,28 +58,6 @@ export default function CheckOut() {
 			window.location.href = '/';
 		}
 	}, []);
-
-	const onSubmit = (data) => {
-		const formData = new FormData();
-
-		Object.keys(data).forEach((key) => formData.append(key, data[key]));
-
-		// append cart order
-		formData.append('order', window.localStorage.getItem('cart'));
-		fetch('http://localhost:9000/postOrder.php', {
-			method: 'POST',
-			body: formData,
-		})
-			.then((res) => res.text())
-			.then((res) => {
-				// dari success, generate order ID, lalu redirect sesuai order ID
-				// kalo gaada order ID, ya redirect ke halaman lain?
-				const orderId = JSON.parse(res)._id;
-				// remove cart because order already placed
-				window.localStorage.removeItem('cart');
-				window.location.href = `/order-complete?orderId=${orderId}`;
-			});
-	};
 
 	return (
 		<>

@@ -20,8 +20,12 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 			/>
 			<div className={`${style['product-item__content']} my-1`}>
 				<p className="mt-2 mb-1">
-					<span className={style['product-item__price']}>A${item.price}</span>{' '}
-					<span className={style['product-item__unit']}>/ {item.unit}</span>
+					<span className={`text-size-sm ${style['product-item__price']}`}>
+						A${item.price}
+					</span>{' '}
+					<span className={`text-size-xs ${style['product-item__unit']}`}>
+						/ {item.unit}
+					</span>
 				</p>
 				<h2 className="text-size-md">{item.name}</h2>
 			</div>

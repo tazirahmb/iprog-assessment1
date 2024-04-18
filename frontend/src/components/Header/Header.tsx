@@ -5,18 +5,8 @@ import style from './Header.module.css';
 import Link from 'next/link';
 
 import SearchBox from '@/components/SearchBox';
-// import { useMemo } from 'react';
 
-const Header = ({ minimum }) => {
-	// // TODO: update each item addded?
-	// const cartQtyTotal = useMemo(() => {
-	// 	const cartItem = JSON.parse(window.localStorage.getItem('cart')) || [];
-	// 	return `AU$${cartItem.reduce(
-	// 		(sum, { quantity, price }) => sum + quantity * price,
-	// 		0,
-	// 	)}`;
-	// }, []);
-
+const Header = ({ minimum }: HeaderProps) => {
 	return (
 		<header title="page-header" className={`${style['header-wrapper']} py-1`}>
 			<div className="container">
@@ -59,5 +49,9 @@ const Header = ({ minimum }) => {
 		</header>
 	);
 };
+
+interface HeaderProps {
+	minimum: boolean;
+}
 
 export default Header;

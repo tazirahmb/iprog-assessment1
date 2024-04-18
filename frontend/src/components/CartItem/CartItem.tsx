@@ -1,5 +1,5 @@
-const dummyImg =
-	'https://jmjglobalwinpex.com/wp-content/uploads/2019/01/11412309_7a598013-ad27-4020-9234-ecb4dda7e0f7_833_775.jpg';
+import type { ProductDefaultType } from '@/utils/cartHelpers';
+import { productDummyImage } from '@/utils/cartHelpers';
 
 import Image from 'next/image';
 
@@ -14,13 +14,15 @@ const CartItem = ({
 	handleAddQuantity,
 	handleReduceQuantity,
 }: CartItemProps) => {
+	const { quantity = 0 } = item;
+
 	return (
 		<div
 			className={`flex-row justify-content-between align-items-center ${style['cart-item']} p-2`}
 		>
 			<div className="flex-row align-items-center">
 				<Image
-					src={item.image || dummyImg}
+					src={item.image || productDummyImage}
 					alt={item.name}
 					width={100}
 					height={100}
@@ -41,7 +43,7 @@ const CartItem = ({
 				className={`flex-column align-items-end g-2 ${style['cart-item__count']}`}
 			>
 				{readOnly ? (
-					<span className={style['cart-item__unit']}>Qty: {item.quantity}</span>
+					<span className={style['cart-item__unit']}>Qty: {quantity}</span>
 				) : (
 					<div>
 						<Button
@@ -52,21 +54,21 @@ const CartItem = ({
 						</Button>
 						<input
 							className={`my-input-style ${style['cart-item__count__input']}`}
-							value={item.quantity}
+							value={quantity}
 							onChange={(e) => handleUpdateQuantity(e, item._id)}
 							name="itemQty"
 						/>
 						<Button
 							className={style['cart-item__count__button-plus']}
 							onClick={() => handleAddQuantity(item._id)}
-							disabled={item.quantity >= item.stock}
+							disabled={quantity >= item.stock}
 						>
 							+
 						</Button>
 					</div>
 				)}
 				<span className={`${style['cart-item__count__total-price']}`}>
-					total Price: <strong>A${item.quantity * item.price}</strong>
+					total Price: <strong>A${quantity * item.price}</strong>
 				</span>
 			</div>
 		</div>
@@ -75,16 +77,9 @@ const CartItem = ({
 
 export default CartItem;
 
-interface CartItemProps {
-	item: {
-		_id: number | string;
-		name: string;
-		image?: string;
-		unit: string;
-		price: number;
-		stock: number;
-		quantity: number;
-	};
-	handleAddQuantity: any;
-	handleReduceQuantity: any;
+interface CartItemProps extends ProductDefaultType {
+	handleAddQuantity: (itemId: string | number) => void;
+	handleReduceQuantity: (itemId: string | number) => void;
+	handleUpdateQuantity: (e: any, itemId: string | number) => void;
+	readOnly: boolean;
 }

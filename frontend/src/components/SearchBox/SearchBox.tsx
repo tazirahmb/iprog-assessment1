@@ -2,19 +2,19 @@ import Button from '@/components/Button';
 
 import style from './SearchBox.module.css';
 
-function redirectToSearch(query) {
+function redirectToSearch(query: string) {
 	window.location.href = `/?search=${query}`;
 }
 
 const SearchBox = () => {
-	function handleSearch(formData) {
-		const searchQuery = formData.get('search');
+	function handleSearch(formData: FormData) {
+		const searchQuery = formData.get('search') || '';
 		if (searchQuery !== '') {
-			redirectToSearch(searchQuery.trim());
+			redirectToSearch(searchQuery);
 		}
 	}
 
-	function handleSearchKeyDown(e) {
+	function handleSearchKeyDown(e: KeyboardEvent) {
 		const { value } = e.target;
 		if (e.key === 'Enter' && value !== '') {
 			redirectToSearch(value.trim());

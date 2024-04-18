@@ -35,10 +35,3 @@ const Categories = () => {
 };
 
 export default Categories;
-
-interface CategoriesProps {
-	categories: Array<{
-		_id: string;
-		name: string;
-	}>;
-}

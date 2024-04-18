@@ -4,14 +4,14 @@ import React from 'react';
 
 import style from './InputBox.module.css';
 
-const InputBox = React.forwardRef(
-	({ label, name, errorMessage, ...props }: InputBoxProps, ref) => {
+const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(
+	({ label, name, errorMessage, ...rest }: InputBoxProps, ref) => {
 		return (
 			<div className={`col-6 ${style['input-box']}`}>
 				<label className="my-input-label" htmlFor={name}>
 					{label}
 				</label>
-				<input name={name} id={name} aria-label={label} ref={ref} {...props} />
+				<input name={name} id={name} aria-label={label} ref={ref} {...rest} />
 				<span>{errorMessage?.message}</span>
 			</div>
 		);
@@ -20,8 +20,9 @@ const InputBox = React.forwardRef(
 
 export default InputBox;
 
-interface InputBoxProps {
+interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
 	name: string;
-	errorMessage: object | null;
+	errorMessage: { message: string } | null;
+	[rest: string]: any;
 }

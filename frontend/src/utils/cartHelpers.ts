@@ -1,3 +1,19 @@
+export interface ProductDefaultType {
+	item: {
+		_id: number | string;
+		name: string;
+		image?: string;
+		unit: string;
+		price: number;
+		stock: number;
+		quantity?: number;
+	}
+}
+
+export const productDummyImage =
+	'https://jmjglobalwinpex.com/wp-content/uploads/2019/01/11412309_7a598013-ad27-4020-9234-ecb4dda7e0f7_833_775.jpg';
+
+
 export function checkCartIndex(shoppingCart, _id) {
 	return shoppingCart.findIndex((cartItem) => cartItem._id === _id);
 }

@@ -1,5 +1,5 @@
-const dummyImg =
-	'https://jmjglobalwinpex.com/wp-content/uploads/2019/01/11412309_7a598013-ad27-4020-9234-ecb4dda7e0f7_833_775.jpg';
+import type { ProductDefaultType } from '@/utils/cartHelpers';
+import { productDummyImage } from '@/utils/cartHelpers';
 
 import Image from 'next/image';
 import style from './ProductItem.module.css';
@@ -12,7 +12,7 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 	return (
 		<div className={`${style['product-item']} p-2`}>
 			<Image
-				src={item.image || dummyImg}
+				src={item.image || productDummyImage}
 				alt={item.name}
 				width={200}
 				height={200}
@@ -37,16 +37,8 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 	);
 };
 
-export default ProductItem;
-
-interface ProductItemProps {
-	readonly item: {
-		_id: number | string;
-		name: string;
-		image?: string;
-		unit: string;
-		price: number;
-		stock: number;
-	};
-	onClick: any; // TODO: ganti jadi buat function?
+interface ProductItemProps extends ProductDefaultType {
+	onClick: any;
 }
+
+export default ProductItem;

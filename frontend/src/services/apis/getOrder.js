@@ -1,7 +1,7 @@
 import { getCartPriceTotal, formatCartData } from '@/utils/cartHelpers';
 
 const getOrder = ({ setItemData, setLoading, queryString }) =>
-	fetch('http://localhost:9000/getOrder.php' + queryString)
+	fetch(`${process.env.NEXT_PUBLIC_API_URL}/getOrder.php` + queryString)
 		.then((res) => res.text())
 		.then((res) => {
 			const parsedOrderData = JSON.parse(res)[0];

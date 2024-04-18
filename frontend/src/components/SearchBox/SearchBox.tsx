@@ -3,7 +3,7 @@ import Button from '@/components/Button';
 import style from './SearchBox.module.css';
 
 function redirectToSearch(query) {
-	window.location.search = `?search=${query}`;
+	window.location.href = `/?search=${query}`;
 }
 
 const SearchBox = () => {

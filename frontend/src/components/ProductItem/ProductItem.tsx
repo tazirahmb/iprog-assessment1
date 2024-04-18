@@ -16,9 +16,11 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 				alt={item.name}
 				width={200}
 				height={200}
+				className="mx-auto"
 				priority
 			/>
 			<div className={`${style['product-item__content']} my-1`}>
+				<h2 className="text-size-md mt-2 mb-1">{item.name}</h2>
 				<p className="mt-2 mb-1">
 					<span className={`text-size-sm ${style['product-item__price']}`}>
 						A${item.price}
@@ -27,7 +29,6 @@ const ProductItem = ({ item, onClick }: ProductItemProps) => {
 						/ {item.unit}
 					</span>
 				</p>
-				<h2 className="text-size-md">{item.name}</h2>
 			</div>
 			<Button disabled={isSoldOut} onClick={(e) => onClick(e, item)}>
 				{isSoldOut ? 'Sold Out' : 'Add to Cart'}

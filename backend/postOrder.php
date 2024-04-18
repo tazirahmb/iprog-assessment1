@@ -27,7 +27,7 @@
     $final_product_stock = $product_stock - $orderQtyPaid;
 
     if($final_product_stock < 0) {
-      throw new Exception("Product Stock less than 0!", 1);      
+      throw new Exception("One or more of your Product Stock already sold out. Please check your cart again!", 1);      
     } else { 
       
       $update_products_quantity_query = "UPDATE products

@@ -1,4 +1,4 @@
-import type { ProductDefaultType } from '@/utils/cartHelpers';
+import type { ProductDefaultType } from '@/utils/interface';
 import { productDummyImage } from '@/utils/cartHelpers';
 
 import Image from 'next/image';
@@ -56,6 +56,7 @@ const CartItem = ({
 							className={`my-input-style ${style['cart-item__count__input']}`}
 							value={quantity}
 							onChange={(e) => handleUpdateQuantity(e, item._id)}
+							aria-label="item-quantity"
 							name="itemQty"
 						/>
 						<Button

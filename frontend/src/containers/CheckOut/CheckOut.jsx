@@ -26,7 +26,7 @@ const schema = yup.object({
 
 const stateData = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'];
 
-const onSubmit = (data: { [x: string]: string }) => {
+const onSubmit = (data) => {
 	const formData = new FormData();
 
 	Object.keys(data).forEach((key) => formData.append(key, data[key]));

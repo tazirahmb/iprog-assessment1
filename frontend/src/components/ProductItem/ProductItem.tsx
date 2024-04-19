@@ -1,4 +1,4 @@
-import type { ProductDefaultType } from '@/utils/cartHelpers';
+import type { ProductDefaultType } from '@/utils/interface';
 import { productDummyImage } from '@/utils/cartHelpers';
 
 import Image from 'next/image';

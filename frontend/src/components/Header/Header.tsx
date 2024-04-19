@@ -51,7 +51,7 @@ const Header = ({ minimum }: HeaderProps) => {
 };
 
 interface HeaderProps {
-	minimum: boolean;
+	minimum?: boolean;
 }
 
 export default Header;

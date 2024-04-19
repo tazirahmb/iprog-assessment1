@@ -29,7 +29,14 @@
 		"src/app/layout.jsx",
 		"src/app/layout.jsx",
 		"src/app/layout.jsx",
-		"src/components/SearchBox/SearchBox.tsx"
+		"src/components/SearchBox/SearchBox.jsx",
+		"src/utils/cartHelpers.js",
+		"src/services/hooks/useFetch.jsx",
+		"src/containers/ShoppingCart/ShoppingCart.jsx",
+		"src/containers/OrderConfirmation/OrderConfirmation.jsx",
+		"src/containers/Home/Home.jsx",
+		"src/containers/CheckOut/CheckOut.jsx",
+		"src/containers/CheckOut/CheckOut.jsx"
 	],
 	"exclude": ["node_modules"]
 }

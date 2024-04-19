@@ -1,0 +1,18 @@
+.button__clear-cart {
+  width: auto;
+  background-color: white;
+  color: var(--primary);
+}
+
+.button__clear-cart:hover {
+  background-color: white;
+  color: var(--primaryLight);
+}
+
+.checkout-btn {
+  color: white !important;
+  padding: 4px 16px;
+  font-size: 1rem;
+  height: auto;
+  width: 165px;
+}

@@ -1,0 +1,26 @@
+.product-item {
+  border: 1px solid var(--neutralColor);
+  border-radius: 12px;
+  height: auto;
+  width: auto;
+}
+
+.product-item:hover {
+  border-color: var(--primary);
+}
+
+.product-item__content {
+  height: 100px;
+}
+
+.product-item__content h2 {
+  font-weight: normal;
+}
+
+.product-item__price {
+  font-weight: bold;
+}
+
+.product-item__unit {
+  color: var(--neutralColorDark);
+}

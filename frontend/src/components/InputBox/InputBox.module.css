@@ -1,0 +1,8 @@
+.input-box input {
+  width: 100%;
+}
+
+.input-box span {
+  color: var(--primary);
+  font-size: 10px;
+}

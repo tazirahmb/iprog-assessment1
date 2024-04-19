@@ -1,5 +1,19 @@
 .header-wrapper {
-  height: 72px;
-border-bottom: 1px solid black;
-padding: 16px;
+background-color: var(--white);
+  border-bottom: 1.5px solid var(--neutralColorLight);
+}
+
+.logo-link {
+  display: inline-flex;
+}
+
+.cart {
+color: var(--neutralColorDarker);
+background-color: var(--neutralColorLight);
+border-radius: 12px;
+}
+
+.cart:hover {
+  box-shadow: inset 0 0 0 0.2rem var(--neutralColorDarker);
+  background-color: var(--neutralColorLight);
 }

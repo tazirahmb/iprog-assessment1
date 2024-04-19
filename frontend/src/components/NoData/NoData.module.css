@@ -1,0 +1,10 @@
+.no-data {
+width: 100%;
+text-align: center;
+margin-top: 172px;
+}
+
+.no-data__icon {
+  font-size: 6rem;
+  font-weight: bold;
+}

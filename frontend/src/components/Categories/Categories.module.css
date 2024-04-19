@@ -1,0 +1,29 @@
+.categories-wrapper {
+  background-color: var(--neutralColorLighter);
+  height: 60px;
+  border-bottom: 1.5px solid var(--neutralColorLight);
+
+}
+
+.category__item {
+  height: 60px;
+
+}
+
+.category__active {
+  background-color: var(--accentColor);
+  color: white;
+}
+
+
+
+.categories__link{
+  height: 100%;
+  display: inline-block;
+}
+
+.categories__link:hover{
+  border-bottom: 4px solid var(--primary) !important;
+  cursor: pointer;
+  transition: 0.25s;
+}
